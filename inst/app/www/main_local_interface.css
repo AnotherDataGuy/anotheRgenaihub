@@ -1,0 +1,440 @@
+/* ==========================================================================
+   Base Variables & Theme Support
+   ========================================================================== */
+:root {
+  /* Colors - Dark Theme Default */
+  --primary: #007bff;
+  --primary-light: #e6f3ff;
+  --primary-dark: #0056b3;
+  --secondary: #6c757d;
+  --success: #28a745;
+  --warning: #ffc107;
+  --danger: #dc3545;
+  --light: rgba(22, 87, 109, 0.11);
+  --dark: #343a40;
+  --bg-panel: #2c3338;
+  --border: #454d55;
+  --text: #e9ecef;
+  --text-muted: #adb5bd;
+  --shadow: rgba(0, 0, 0, 0.2);
+
+  /* Animations */
+  --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-slow: 350ms cubic-bezier(0.4, 0, 0.2, 1);
+  --scale: scale(1);
+  --scale-hover: scale(1.02);
+
+  /* Layout */
+  --container-max-width: 1400px;
+  --container-padding: clamp(10px, 2vw, 20px);
+  --border-radius: clamp(8px, 1.5vw, 12px);
+  --border-radius-sm: clamp(4px, 1vw, 6px);
+}
+
+body {
+  background-color: var(--bg-panel);
+  color: var(--text);
+}
+
+[bs-theme="light"] {
+  --primary: #007bff;
+  --primary-light: #4169e1;
+  --primary-dark: #0056b3;
+  --secondary: #6c757d;
+  --success: #28a745;
+  --warning: #ffc107;
+  --danger: #dc3545;
+  --light: #f8f9fa;
+  --dark: #343a40;
+  --bg-panel: #ffffff;
+  --border: #dee2e6;
+  --text: #212529;
+  --text-muted: #6c757d;
+  --shadow: rgba(0, 0, 0, 0.05);
+}
+
+[bs-theme="dark"] {
+  --primary: #007bff;
+  --primary-light: #1a3a5a;
+  --primary-dark: #0056b3;
+  --secondary: #6c757d;
+  --success: #28a745;
+  --warning: #ffc107;
+  --danger: #dc3545;
+  --light: rgba(22, 87, 109, 0.11);
+  --dark: #343a40;
+  --bg-panel: #2c3338;
+  --border: #454d55;
+  --text: #e9ecef;
+  --text-muted: #adb5bd;
+  --shadow: rgba(0, 0, 0, 0.2);
+}
+/* Global Link Styles */
+a {
+  color: chartreuse;
+  transition: var(--transition-fast);
+}
+
+a:hover {
+  opacity: 0.9;
+  transform: var(--scale-hover);
+}
+
+
+.custom-control.custom-switch.mx-2.mt-2 {
+  display: none !important;
+}
+
+#controlbar-toggle {
+  display: none !important;
+}
+/* ==========================================================================
+   Layout & Container
+   ========================================================================== */
+.chat-interface {
+  margin: 0 auto;
+  padding: var(--container-padding);
+  max-width: min(94%, var(--container-max-width));
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* ==========================================================================
+   Chat Panel Components
+   ========================================================================== */
+.panel {
+  background: var(--bg-panel);
+  border-radius: var(--border-radius);
+  box-shadow: 0 2px 8px var(--shadow);
+  border: 1px solid var(--border);
+  margin-bottom: 1rem;
+  transition: var(--transition-normal);
+  transform: var(--scale);
+  backface-visibility: hidden;
+  will-change: transform, opacity;
+}
+
+.panel:hover {
+  transform: var(--scale-hover);
+  box-shadow: 0 4px 12px var(--shadow);
+}
+
+.panel-heading {
+  padding: clamp(0.8rem, 2vw, 1.2rem);
+  border-bottom: 1px solid var(--border);
+  background-color: var(--light);
+  border-radius: var(--border-radius) var(--border-radius) 0 0;
+  transition: background-color var(--transition-normal);
+}
+
+.panel-title {
+  color: var(--text);
+  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+  margin: 0;
+  font-weight: 500;
+  transition: color var(--transition-normal);
+}
+
+.panel-body {
+  padding: 1vw;
+}
+/* ==========================================================================
+   Chat Messages
+   ========================================================================== */
+.chat-messages {
+  height: clamp(300px, 60vh, 600px);
+  padding: 1.5rem;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  scroll-behavior: smooth;
+  overscroll-behavior-y: contain;
+  -webkit-overflow-scrolling: touch;
+}
+
+.chat-message {
+  max-width: 70%;
+  padding: 0.75rem 1rem;
+  border-radius: var(--border-radius);
+  line-height: 1.5;
+  box-shadow: 0 1px 2px var(--shadow);
+  word-wrap: break-word;
+  opacity: 0;
+  animation: messageAppear 0.3s ease-out forwards;
+  transition: transform var(--transition-fast);
+}
+
+.user-message {
+  background: var(--primary);
+  color: white;
+  margin-left: auto;
+  border-bottom-right-radius: var(--border-radius-sm);
+  transform-origin: bottom right;
+}
+
+.assistant-message {
+  background: #343a40;
+  color: black;
+  margin-right: auto;
+  border-bottom-left-radius: var(--border-radius-sm);
+  transform-origin: bottom left;
+}
+
+.error-message {
+  background: var(--danger);
+  color: white;
+  margin-right: auto;
+  border-bottom-left-radius: var(--border-radius-sm);
+  animation: shake 0.4s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+/* ==========================================================================
+   Metrics Panel
+   ========================================================================== */
+.metrics-content {
+  padding: clamp(1rem, 2vw, 1.25rem);
+  background: var(--bg-panel);
+  border-radius: var(--border-radius);
+  transition: background-color var(--transition-normal);
+}
+
+.metrics-section {
+  margin-bottom: 1.5rem;
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
+  gap: clamp(0.5rem, 2vw, 1rem);
+}
+
+.metric-card {
+  background: var(--light);
+  padding: clamp(0.75rem, 2vw, 1rem);
+  border-radius: var(--border-radius);
+  transition: all var(--transition-normal);
+  transform: var(--scale);
+  will-change: transform;
+}
+
+.metric-card:hover {
+  transform: var(--scale-hover);
+  box-shadow: 0 4px 12px var(--shadow);
+}
+
+.metric-card.highlight {
+  background: #dimgrey;
+  border: 1px solid var(--primary);
+}
+
+.metric-card-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-muted);
+  margin-bottom: 0.5rem;
+  transition: color var(--transition-normal);
+}
+
+.metric-card-value {
+  font-size: clamp(1.25rem, 2.5vw, 1.5rem);
+  font-weight: 600;
+  color: var(--text);
+  transition: color var(--transition-normal);
+}
+
+.metric-unit {
+  font-size: clamp(0.75rem, 1.5vw, 0.875rem);
+  color: var(--text-muted);
+  font-weight: normal;
+}
+
+/* ==========================================================================
+   Form Elements
+   ========================================================================== */
+.form-group {
+  margin-bottom: 1rem;
+}
+
+textarea.form-control {
+  resize: vertical;
+  min-height: 80px;
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid var(--border);
+  border-radius: var(--border-radius-sm);
+  transition: all var(--transition-fast);
+  background: var(--bg-panel);
+  color: var(--text);
+}
+
+textarea.form-control:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px var(--primary-light);
+}
+
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
+.btn {
+  padding: 0.5rem 1rem;
+  border-radius: var(--border-radius-sm);
+  font-weight: 500;
+  transition: all var(--transition-fast);
+  transform: var(--scale);
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn:active {
+  transform: scale(0.98);
+}
+
+.btn-primary {
+  background-color: var(--primary);
+  border-color: var(--primary);
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: var(--primary-dark);
+  border-color: var(--primary-dark);
+  transform: var(--scale-hover);
+}
+
+.btn-warning {
+  background-color: var(--warning);
+  border-color: var(--warning);
+  color: var(--dark);
+}
+
+.btn-warning:hover {
+  filter: brightness(1.1);
+  transform: var(--scale-hover);
+}
+
+/* ==========================================================================
+   Animations
+   ========================================================================== */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes messageAppear {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shake {
+  10%, 90% { transform: translateX(-1px); }
+  20%, 80% { transform: translateX(2px); }
+  30%, 50%, 70% { transform: translateX(-4px); }
+  40%, 60% { transform: translateX(4px); }
+}
+
+/* ==========================================================================
+   Responsive Design
+   ========================================================================== */
+@media (max-width: 1200px) {
+  .metrics-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .chat-message {
+    max-width: 85%;
+  }
+
+  .metrics-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .panel-footer {
+    padding: 1rem;
+  }
+
+  .btn {
+    width: 100%;
+    margin-bottom: 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .chat-message {
+    max-width: 90%;
+  }
+
+  .panel-title {
+    font-size: 1.25rem;
+  }
+
+  .metric-card {
+    padding: 0.75rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ==========================================================================
+   Print Styles
+   ========================================================================== */
+@media print {
+  .chat-interface {
+    padding: 0;
+    max-width: 100%;
+  }
+
+  .panel {
+    box-shadow: none;
+    border: 1px solid #000;
+  }
+
+  .btn {
+    display: none;
+  }
+}
+
+/* ==========================================================================
+   Utilities & Accessibility
+   ========================================================================== */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+/* Smooth scrolling for supported browsers */
+@supports (scroll-behavior: smooth) {
+  .chat-messages {
+    scroll-behavior: smooth;
+  }
+}
